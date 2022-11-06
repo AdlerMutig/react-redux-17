@@ -58,9 +58,4 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-// When declared as a property, each property is automatically bound to dispatch
-// const mapDispatchToProps = {
-//     createCourse: courseActions.createCourse,
-// };
-
 export default connect(mapStateToProps, mapDispatchToProps)(CoursesPage);
