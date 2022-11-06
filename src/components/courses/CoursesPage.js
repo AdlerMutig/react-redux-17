@@ -52,14 +52,15 @@ function mapStateToProps(state) {
     return { courses: state.courses };
 }
 
-// Determines what actions ara available in this component
 function mapDispatchToProps(dispatch) {
     return {
-        //createCourse: (course) => dispatch(courseActions.createCourse(course)), // With the not verbose way
-        actions: bindActionCreators(courseActions, dispatch), // Now its an object with a function pro action
+        actions: bindActionCreators(courseActions, dispatch), // Now its an object with a function pro
     };
 }
 
-//Since mapDispatchToProps was declared, dispatch is no longer injected, only what is declars
+// When declared as a property, each property is automatically bound to dispatch
+// const mapDispatchToProps = {
+//     createCourse: courseActions.createCourse,
+// };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CoursesPage);
