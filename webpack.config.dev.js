@@ -24,6 +24,9 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
+            "process.env.API_URL": JSON.stringify("http://localhost:3001"),
+        }),
+        new webpack.DefinePlugin({
             template: "src/index.html",
             favicon: "src/favicon.ico",
         }),
