@@ -32,7 +32,6 @@ class CoursesPage extends React.Component {
                 />
 
                 <input type="submit" value="Save"></input>
-                <div>Hello</div>
                 {this.props.courses.map((course) => (
                     <div key={course.title}>{course.title}</div>
                 ))}
