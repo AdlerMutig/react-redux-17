@@ -54,7 +54,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators(courseActions, dispatch), // Now its an object with a function pro
+        actions: bindActionCreators(courseActions, dispatch),
     };
 }
 
