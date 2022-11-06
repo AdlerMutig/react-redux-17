@@ -2,6 +2,9 @@ import React from "react";
 import { connect } from "react-redux";
 import * as courseActions from "../../redux/actions/courseActions";
 import PropTypes from "prop-types";
+import { bindActionCreators } from "redux";
+// Calling actions in mapDispatchToProps is verbose.
+// bindActionCreators instead of manualy wrap action creators in dispatch
 
 class CoursesPage extends React.Component {
     state = {
@@ -17,7 +20,7 @@ class CoursesPage extends React.Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        this.props.dispatch(courseActions.createCourse(this.state.course));
+        this.props.actions.createCourse(this.state.course);
     };
 
     render() {
@@ -42,11 +45,21 @@ class CoursesPage extends React.Component {
 
 CoursesPage.propTypes = {
     courses: PropTypes.array.isRequired,
-    dispatch: PropTypes.func.isRequired,
+    actions: PropTypes.object.isRequired,
 };
 
 function mapStateToProps(state) {
     return { courses: state.courses };
 }
 
-export default connect(mapStateToProps)(CoursesPage);
+// Determines what actions ara available in this component
+function mapDispatchToProps(dispatch) {
+    return {
+        //createCourse: (course) => dispatch(courseActions.createCourse(course)), // With the not verbose way
+        actions: bindActionCreators(courseActions, dispatch), // Now its an object with a function pro action
+    };
+}
+
+//Since mapDispatchToProps was declared, dispatch is no longer injected, only what is declars
+
+export default connect(mapStateToProps, mapDispatchToProps)(CoursesPage);
