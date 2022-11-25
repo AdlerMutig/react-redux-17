@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 // Calling actions in mapDispatchToProps is verbose.
 // bindActionCreators instead of manualy wrap action creators in dispatch
+import CourseList from "./CourseList";
 
 class CoursesPage extends React.Component {
     componentDidMount() {
@@ -16,9 +17,7 @@ class CoursesPage extends React.Component {
         return (
             <>
                 <h2>Courses</h2>
-                {this.props.courses.map((course) => (
-                    <div key={course.title}>{course.title}</div>
-                ))}
+                <CourseList courses={this.props.courses}></CourseList>
             </>
         );
     }
