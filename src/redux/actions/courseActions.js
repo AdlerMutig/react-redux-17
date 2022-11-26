@@ -1,20 +1,16 @@
 import * as types from "./actionTypes";
 import * as courseApi from "../../api/courseApi";
 
-// export function createCourse(course) { // not necessary anymore
-//     return { type: types.CREATE_COURSE, course }; // object shorthand symtax
-// }
-
-export function loadCoursesSuccess(courses) {
-    return { type: types.LOAD_COURSES_SUCCESS, courses }; // object shorthand symtax
+export function loadCourseSuccess(courses) {
+    return { type: types.LOAD_COURSES_SUCCESS, courses };
 }
 
-export function createCourseSucces(course) {
-    return { type: types.CREATE_COURSE_SUCCESS, course }; // object shorthand symtax
+export function createCourseSuccess(course) {
+    return { type: types.CREATE_COURSE_SUCCESS, course };
 }
 
-export function saveCourseSuccess(course) {
-    return { type: types.UPDATE_COURSE_SUCCESS, course }; // object shorthand symtax
+export function updateCourseSuccess(course) {
+    return { type: types.UPDATE_COURSE_SUCCESS, course };
 }
 
 export function loadCourses() {
@@ -22,7 +18,7 @@ export function loadCourses() {
         return courseApi
             .getCourses()
             .then((courses) => {
-                dispatch(loadCoursesSuccess(courses));
+                dispatch(loadCourseSuccess(courses));
             })
             .catch((error) => {
                 throw error;
@@ -31,13 +27,14 @@ export function loadCourses() {
 }
 
 export function saveCourse(course) {
+    //eslint-disable-next-line no-unused-vars
     return function (dispatch, getState) {
         return courseApi
-            .saveCourse()
+            .saveCourse(course)
             .then((savedCourse) => {
                 course.id
-                    ? dispatch(saveCourseSuccess(course))
-                    : dispatch(createCourseSucces(course));
+                    ? dispatch(updateCourseSuccess(savedCourse))
+                    : dispatch(createCourseSuccess(savedCourse));
             })
             .catch((error) => {
                 throw error;
