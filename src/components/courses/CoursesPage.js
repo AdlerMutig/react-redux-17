@@ -9,6 +9,7 @@ import { Redirect } from "react-router-dom";
 // bindActionCreators instead of manualy wrap action creators in dispatch
 import CourseList from "./CourseList";
 import Spinner from "../common/Spinner";
+import { toast } from "react-toastify";
 
 class CoursesPage extends React.Component {
     state = { redirectToAddCoursePage: false };
@@ -26,6 +27,11 @@ class CoursesPage extends React.Component {
             });
         }
     }
+
+    handleDeleteCourse = (course) => {
+        toast.success("Course deleted");
+        this.props.actions.deleteCourse(course);
+    };
 
     render() {
         return (
@@ -47,7 +53,10 @@ class CoursesPage extends React.Component {
                         >
                             Add course
                         </button>
-                        <CourseList courses={this.props.courses}></CourseList>
+                        <CourseList
+                            onDeleteClick={this.handleDeleteCourse}
+                            courses={this.props.courses}
+                        ></CourseList>
                     </>
                 )}
             </>
@@ -89,6 +98,10 @@ function mapDispatchToProps(dispatch) {
             ),
             loadAuthors: bindActionCreators(
                 authorActions.loadAuthors,
+                dispatch
+            ),
+            deleteCourse: bindActionCreators(
+                courseActions.deleteCourse,
                 dispatch
             ),
         },
