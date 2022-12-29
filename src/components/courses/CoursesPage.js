@@ -8,6 +8,7 @@ import { Redirect } from "react-router-dom";
 // Calling actions in mapDispatchToProps is verbose.
 // bindActionCreators instead of manualy wrap action creators in dispatch
 import CourseList from "./CourseList";
+import Spinner from "../common/Spinner";
 
 class CoursesPage extends React.Component {
     state = { redirectToAddCoursePage: false };
@@ -33,16 +34,22 @@ class CoursesPage extends React.Component {
                     <Redirect to="/course/" />
                 )}
                 <h2>Courses</h2>
-                <button
-                    style={{ marginBottom: 20 }}
-                    className="btn btn-primary add-course"
-                    onClick={() =>
-                        this.setState({ redirectToAddCoursePage: true })
-                    }
-                >
-                    Add course
-                </button>
-                <CourseList courses={this.props.courses}></CourseList>
+                {this.props.loading ? (
+                    <Spinner />
+                ) : (
+                    <>
+                        <button
+                            style={{ marginBottom: 20 }}
+                            className="btn btn-primary add-course"
+                            onClick={() =>
+                                this.setState({ redirectToAddCoursePage: true })
+                            }
+                        >
+                            Add course
+                        </button>
+                        <CourseList courses={this.props.courses}></CourseList>
+                    </>
+                )}
             </>
         );
     }
@@ -52,6 +59,7 @@ CoursesPage.propTypes = {
     courses: PropTypes.array.isRequired,
     authors: PropTypes.array.isRequired,
     actions: PropTypes.object.isRequired,
+    loading: PropTypes.bool.isRequired,
 };
 
 function mapStateToProps(state) {
@@ -68,6 +76,7 @@ function mapStateToProps(state) {
                       };
                   }),
         authors: state.authors,
+        loading: state.apiCallsInProgress > 0,
     };
 }
 
